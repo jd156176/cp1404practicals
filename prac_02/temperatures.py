@@ -25,11 +25,13 @@ def main():
 
 
 def convert_to_celsius(fahrenheit: float):
+    """ Convert Fahrenheit to Celsius """
     celsius = 5 / 9 * (fahrenheit - 32)
     return celsius
 
 
 def convert_to_fahrenheit(celsius: float):
+    """ Convert Celsius to Fahrenheit """
     fahrenheit = celsius * 9.0 / 5 + 32
     return fahrenheit
 
