@@ -17,6 +17,8 @@ def main():
 
 
 def print_number_information(numbers: list[Any]):
+    """Gathers number information such as first and last numbers, smallest and largest numbers and average.
+    Prints for the user."""
     print(f"The first number is {numbers[0]}")
     print(f"The last number is {numbers[-1]}")
     print(f"The smallest number is {min(numbers)}")
@@ -25,6 +27,7 @@ def print_number_information(numbers: list[Any]):
 
 
 def check_username(username: str, usernames: list[Any]):
+    "Checks if inputted username matches from list."
     if username in usernames:
         print("Access Granted")
     else:
