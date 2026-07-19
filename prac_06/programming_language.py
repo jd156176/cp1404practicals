@@ -11,6 +11,7 @@ class ProgrammingLanguage:
     def __init__(self, name="", typing="static",reflection=True,year=0):
         """
         Initialize a programming language instance
+
         :param name: string, name of programming language
         :param typing: string, programming typing mode, either static or dynamic
         :param reflection: boolean
@@ -22,7 +23,7 @@ class ProgrammingLanguage:
         self.year = year
 
     def is_dynamic(self):
-        """Returns true if program is dynamically typed, false if program is static"""
+        """Return true if program is dynamically typed, false if program is static."""
         return self.typing.upper() == "DYNAMIC"
 
     def __str__(self):
