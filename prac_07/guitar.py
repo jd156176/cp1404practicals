@@ -23,7 +23,7 @@ class Guitar:
 
     def __str__(self):
         """Print guitar name, year and cost rounded to two decimal points."""
-        return f"{self.name} ({self.year}: ${self.cost:.2})"
+        return f"{self.name} ({self.year}: ${self.cost:.2f})"
 
     def __repr__(self):
         """Return string representation of a Guitar object."""
