@@ -5,6 +5,7 @@ Actual time:
 """
 import datetime
 from project import Project
+from operator import attrgetter
 
 MENU = """-(L)oad projects
 -(S)ave projects
@@ -30,13 +31,13 @@ def main():
             out_file_name = input("Type filename to save projects to: ")
             save_projects(out_file_name, projects)
         elif menu_choice == "D":
-            pass
+            display_projects(projects)
         elif menu_choice == "F":
-            pass
+            filter_projects_by_date(projects)
         elif menu_choice == "A":
             projects.append(create_project())
         elif menu_choice == "U":
-            pass
+            update_project(projects)
         else:
             print("Invalid Menu Choice.")
 
@@ -142,6 +143,80 @@ def create_project():
 
     return Project(name, start_date, priority, cost_estimate, completion_percentage)
 
+def display_projects(projects: list[Project]):
+    incomplete_projects = [project for project in projects if not project.is_complete()]
+    completed_projects = [project for project in projects if project.is_complete()]
+    incomplete_projects.sort(key=attrgetter("priority"))
+    completed_projects.sort(key=attrgetter("priority"))
+
+    print("Incomplete projects: ")
+    for project in incomplete_projects:
+        print(f"\t{project}")
+    print("Completed projects: ")
+    for project in incomplete_projects:
+        print(f"\t{project}")
+
+def filter_projects_by_date(projects: list[Project]):
+    """Display projects that start on or after a given date, sorted by start date."""
+    cutoff_date = get_date("Show projects that start after date (dd/mm/yyyy): ")
+    filtered_projects = [project for project in projects if project.start_date >= cutoff_date]
+    filtered_projects.sort()
+    for project in filtered_projects:
+        print(project)
+
+def display_indexed_projects(projects: list[Project]):
+    """Print each project preceded by its position in the list."""
+    for index, project in enumerate(projects):
+        print(f"[{index}] {project}")
+
+def get_valid_index(prompt, projects: list[Project]):
+    """Get a valid project index from the user."""
+    index = -1
+    while index < 0 or index >= len(projects):
+        try:
+            index = int(input(prompt))
+            if index <0 or index >= len(projects):
+                print("Invalid project number.")
+        except ValueError:
+            print("Invalid input; enter a valid number")
+    return index
+
+def get_new_percentage(prompt, current_percentage):
+    """Get a new completion percentage, keeping the current value if left blank."""
+    percentage_text = input(prompt)
+    while percentage_text != "":
+        try:
+            percentage = int(percentage_text)
+            if 0 <= percentage <= 100:
+                return percentage
+            print("Percentage must be between 0 and 100.")
+        except ValueError:
+            print("Invalid input; enter a valid number")
+        percentage_text = input(prompt)
+    return current_percentage
+
+def get_new_priority(prompt, current_priority):
+    """Get a new priority, keeping the current value if left blank."""
+    priority_text = input(prompt)
+    while priority_text != "":
+        try:
+            priority = int(priority_text)
+            if priority > 0:
+                return priority
+            print("Priority must be greater than 0.")
+        except ValueError:
+            print("Invalid input; enter a valid number")
+        priority_text = input(prompt)
+    return current_priority
+
+def update_project(projects: list[Project]):
+    """Let the user select a project and adjust its priority and/or completion progress"""
+    display_indexed_projects(projects)
+    index = get_valid_index("Project Choice: ", projects)
+    project = projects[index]
+    print(project)
+    project.completion_percentage = get_new_percentage("New Percentage: ", project.completion_percentage)
+    project.priority = get_new_priority("New Priority: ", project.priority)
 
 main()
 
