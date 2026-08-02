@@ -1,8 +1,6 @@
 """Prac 07 More Guitars exercise"""
 
 import csv
-from typing import Any
-
 from guitar import Guitar
 
 def main():
