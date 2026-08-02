@@ -1,5 +1,3 @@
-import datetime
-
 class Project:
     """Represent project details as an object"""
 
@@ -11,7 +9,7 @@ class Project:
         self.completion_percentage = completion_percentage
 
     def __str__(self):
-        return (f"{self.name} Start Date:{self.start_date} Priority:{self.priority} Cost Estimate:{self.cost_estimate}"
+        return (f"[{self.name}] Start Date:{self.start_date} Priority:{self.priority} Cost Estimate:{self.cost_estimate}"
                 f"Completion Percentage:{self.completion_percentage}")
 
     def __repr__(self):

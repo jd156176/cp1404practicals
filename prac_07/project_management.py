@@ -1,7 +1,7 @@
 """
 CP1404 Prac 7 - Project Management Program
 Estimated Time: 2 hours
-Actual time:
+Actual time: 2 hours 20 minutes
 """
 import datetime
 from project import Project
@@ -19,16 +19,22 @@ FILENAME = "projects.txt"
 def main():
     projects = []
     print("Welcome to Pythonic Project Management")
-    load_projects(FILENAME, projects)
-    print(projects)
+
+    try:
+        load_projects(FILENAME, projects)
+    except FileNotFoundError:
+        print(f"Error, {FILENAME} not found!")
     print(MENU)
     menu_choice = input(">>>> ").upper()
     while menu_choice != "Q":
         if menu_choice == "L":
-            in_file_name = input("Type filename to load projects from: ")
-            load_projects(in_file_name, projects)
+            in_file_name = get_valid_name("Type filename to load projects from: ")
+            try:
+                load_projects(in_file_name, projects)
+            except FileNotFoundError:
+                print(f"Error, {in_file_name} does not actually exist!")
         elif menu_choice == "S":
-            out_file_name = input("Type filename to save projects to: ")
+            out_file_name = get_valid_name("Type filename to save projects to: ")
             save_projects(out_file_name, projects)
         elif menu_choice == "D":
             display_projects(projects)
@@ -48,7 +54,7 @@ def main():
     #Pressing enter counts as yes
     wants_to_save = save_choice == ""
     if wants_to_save:
-        pass
+        save_projects(FILENAME, projects)
     print("Thank you for using custom-built project management software.")
 
 
@@ -153,7 +159,7 @@ def display_projects(projects: list[Project]):
     for project in incomplete_projects:
         print(f"\t{project}")
     print("Completed projects: ")
-    for project in incomplete_projects:
+    for project in completed_projects:
         print(f"\t{project}")
 
 def filter_projects_by_date(projects: list[Project]):
@@ -217,6 +223,15 @@ def update_project(projects: list[Project]):
     print(project)
     project.completion_percentage = get_new_percentage("New Percentage: ", project.completion_percentage)
     project.priority = get_new_priority("New Priority: ", project.priority)
+
+def get_valid_name(prompt):
+    """Get a valid non-empty string from the user."""
+    text = input(prompt).strip()
+
+    while text == "":
+        print("Input cannot be blank")
+        text = input(prompt).strip()
+    return text
 
 main()
 
