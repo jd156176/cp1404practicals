@@ -16,3 +16,7 @@ class Project:
 
     def __repr__(self):
         return str(self)
+
+    def to_file_line(self):
+        """Formate the project details as a tab-separated string for file output."""
+        return f"{self.name}\t{self.start_date}\t{self.priority}\t{self.cost_estimate}\t{self.completion_percentage}"

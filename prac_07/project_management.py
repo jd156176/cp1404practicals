@@ -19,11 +19,16 @@ def main():
     projects = []
     print("Welcome to Pythonic Project Management")
     load_projects(FILENAME, projects)
+    print(projects)
     print(MENU)
     menu_choice = input(">>>> ").upper()
     while menu_choice != "Q":
-        if menu_choice == "S":
-            pass
+        if menu_choice == "L":
+            in_file_name = input("Type filename to load projects from: ")
+            load_projects(in_file_name, projects)
+        elif menu_choice == "S":
+            out_file_name = input("Type filename to save projects to: ")
+            save_projects(out_file_name, projects)
         elif menu_choice == "D":
             pass
         elif menu_choice == "F":
@@ -34,7 +39,9 @@ def main():
             pass
         else:
             print("Invalid Menu Choice.")
-            menu_choice = input(">>>> ").upper()
+
+        print(MENU)
+        menu_choice = input(">>>> ").upper()
 
     save_choice = input(f"Would you like to save to {FILENAME}?")
     #Pressing enter counts as yes
@@ -54,6 +61,13 @@ def load_projects(filename, projects: list[Project]):
             date = datetime.datetime.strptime(parts[1], "%d/%m/%Y").date()
             projects.append(Project(parts[0], date, int(parts[2]), float(parts[3]), int(parts[4])))
     print(f"Loaded {len(projects)} from {filename}")
+
+def save_projects(filename, projects: list[Project]):
+    with open(filename, "w") as out_file:
+        out_file.write("Name    Start Date  Priority    Cost Estimate   Completion Percentage\n")
+        for project in projects:
+            out_file.write(f"{project.to_file_line()}\n")
+    print(f"Saved {len(projects)} to {filename}")
 
 
 main()
