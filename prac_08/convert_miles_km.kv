@@ -1,0 +1,28 @@
+BoxLayout:
+    orientation: 'vertical'
+
+    BoxLayout:
+        orientation: 'horizontal'
+        TextInput:
+            id: input_miles
+            text: '1'
+            multiline: False
+            on_text: app.handle_calculate(input_miles.text)
+
+        BoxLayout:
+            orientation: 'vertical'
+            Button:
+                text: 'Up'
+                on_press: input_miles.text = app.handle_increment(input_miles.text, 1)
+            Button:
+                text: 'Down'
+                on_press: input_miles.text = app.handle_increment(input_miles.text, -1)
+#    Button:
+#        text: 'Convert miles to km'
+#        #call the python method when clicked, passing the text from the text_input
+#        on_press: app.handle_calculate(input_miles.text)
+
+    Label:
+        #bind the text directly to the StringProperty defined in the App clas
+        text: app.result_text
+
